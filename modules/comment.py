@@ -17,3 +17,7 @@ class Comment:
     def delete_comment(self, comment_id):
         path = f"/comment/{comment_id}"
         return self.sender.delete(path)
+
+    def update_comment(self, payload, comment_id):
+        path = f"/comment/{comment_id}"
+        return self.sender.put(path, payload)
