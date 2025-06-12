@@ -6,24 +6,48 @@ jobs:
       - image: circleci/python:3.10.1-node-browsers
     steps:
       - checkout
+
       - run:
           name: set up venv
           command: |
             python -m venv venv
             . venv/bin/activate
+
       - run:
           name: install dependencies
           command: |
             . venv/bin/activate
             pip install -r requirements.txt
+            pip install pytest-html allure-pytest
+
       - run:
           name: run tests
           command: |
             . venv/bin/activate
-            pytest --template=html1/index.html --report=report.html
+            pytest --alluredir=allure-results \
+                   --template=html1/index.html \
+                   --report=report.html
+
+      - run:
+          name: install allure CLI
+          command: |
+            curl -o allure.tgz -L https://github.com/allure-framework/allure2/releases/download/2.27.0/allure-2.27.0.tgz
+            tar -xvzf allure.tgz
+            sudo mv allure-2.27.0 /opt/allure
+            sudo ln -s /opt/allure/bin/allure /usr/local/bin/allure
+
+      - run:
+          name: generate allure report
+          command: |
+            allure generate allure-results -o allure-report --clean
+
       - store_artifacts:
           path: report.html
-          destination: python-report
+          destination: pytest-html
+
+      - store_artifacts:
+          path: allure-report
+          destination: allure-report
 
 workflows:
   build-and-test:

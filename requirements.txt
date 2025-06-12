@@ -3,3 +3,5 @@ requests==2.32.4
 Faker==37.3.0
 pytest-reporter-html1==0.9.3
 python-dotenv==1.1.0
+locust==2.24.1
+allure-pytest==2.14.3
