@@ -21,11 +21,23 @@ def comment_payload():
         "notify_all": True
     }
 
-@pytest.fixture
+@pytest.fixture(scope="function")
 def new_list_comment(comment_payload, authorized_sender):
     comment = Comment(authorized_sender)
 
     response = comment.create_list_comment(comment_payload)
+    response.raise_for_status()
+    comment_id = response.json()["id"]
+
+    yield comment, comment_payload, comment_id
+
+    comment.delete_comment(comment_id)
+
+@pytest.fixture(scope="function")
+def new_task_comment(comment_payload, authorized_sender):
+    comment = Comment(authorized_sender)
+
+    response = comment.create_task_comment(comment_payload)
     response.raise_for_status()
     comment_id = response.json()["id"]
 
