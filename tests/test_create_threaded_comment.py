@@ -1,7 +1,9 @@
+import allure
+
 from modules.comment import Comment
 from tests.testdata import generate_comment_payload
 
-
+@allure.tag("functional", "api", "comment")
 def test_create_threaded_comment_status_200(new_list_comment):
     comment, payload, comment_id = new_list_comment
     payload = generate_comment_payload()
@@ -14,6 +16,7 @@ def test_create_threaded_comment_status_200(new_list_comment):
     finally:
         comment.delete_comment(threaded_comment_id)
 
+@allure.tag("functional", "api", "comment")
 def test_create_threaded_comment_includes_threaded_comment_id(new_list_comment):
     comment, payload, comment_id = new_list_comment
     payload = generate_comment_payload()
@@ -26,6 +29,7 @@ def test_create_threaded_comment_includes_threaded_comment_id(new_list_comment):
 
     comment.delete_comment(response_dict["id"])
 
+@allure.tag("functional", "api", "comment")
 def test_create_threaded_comment_fails_without_auth(new_list_comment, unauthorized_sender):
     comment, payload, comment_id = new_list_comment
     payload = generate_comment_payload()

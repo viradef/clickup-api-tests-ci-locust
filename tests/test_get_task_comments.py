@@ -1,15 +1,20 @@
+import allure
+
 from modules.comment import Comment
 
+@allure.tag("functional", "api", "comment")
 def test_get_task_comments_status_200(authorized_sender):
     response = Comment(authorized_sender).get_task_comments()
     assert response.status_code == 200,\
         f"Expected 200, got {response.status_code}: {response.text}"
 
+@allure.tag("functional", "api", "comment")
 def test_get_task_comments_fails_without_auth(unauthorized_sender):
     response = Comment(unauthorized_sender).get_task_comments()
     assert response.status_code == 400,\
         f"Expected 400, got {response.status_code}: {response.text}"
 
+@allure.tag("functional", "api", "comment")
 def test_get_task_comments_returns_created_comment_data_fields(new_task_comment):
     comment, payload, comment_id = new_task_comment
 

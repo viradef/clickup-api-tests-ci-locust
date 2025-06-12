@@ -1,7 +1,10 @@
 from http.client import responses
 
+import allure
+
 from modules.comment import Comment
 
+@allure.tag("functional", "api", "comment")
 def test_get_threaded_comments_status_200(new_list_comment):
     comment, payload, comment_id = new_list_comment
 
@@ -9,6 +12,7 @@ def test_get_threaded_comments_status_200(new_list_comment):
     assert response.status_code == 200,\
         f"Expected 200, got {response.status_code}: {response.text}"
 
+@allure.tag("functional", "api", "comment")
 def test_get_threaded_comments_fails_without_auth(new_list_comment, unauthorized_sender):
     comment, payload, comment_id = new_list_comment
 
@@ -16,6 +20,7 @@ def test_get_threaded_comments_fails_without_auth(new_list_comment, unauthorized
     assert response.status_code == 400, \
         f"Expected 400, got {response.status_code}: {response.text}"
 
+@allure.tag("functional", "api", "comment")
 def test_get_threaded_comments_returns_created_comment_data(new_list_comment):
     comment, payload, comment_id = new_list_comment
 

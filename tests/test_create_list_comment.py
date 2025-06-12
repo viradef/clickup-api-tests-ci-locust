@@ -1,6 +1,9 @@
+import allure
+
 from modules.comment import Comment
 from tests.testdata import generate_comment_payload
 
+@allure.tag("functional", "api", "comment")
 def test_create_list_comment_status_200(authorized_sender):
     comment = Comment(authorized_sender)
     payload = generate_comment_payload()
@@ -14,6 +17,7 @@ def test_create_list_comment_status_200(authorized_sender):
     finally:
         comment.delete_comment(comment_id)
 
+@allure.tag("functional", "api", "comment")
 def test_create_list_comment_response_includes_comment_id(authorized_sender):
     comment = Comment(authorized_sender)
     payload = generate_comment_payload()
@@ -26,6 +30,7 @@ def test_create_list_comment_response_includes_comment_id(authorized_sender):
 
     comment.delete_comment(response_dict["id"])
 
+@allure.tag("functional", "api", "comment")
 def test_create_list_comment_fails_without_auth(unauthorized_sender):
     payload = generate_comment_payload()
     response = Comment(unauthorized_sender).create_list_comment(payload)
