@@ -32,3 +32,7 @@ def new_list_comment(comment_payload, authorized_sender):
     yield comment, comment_payload, comment_id
 
     comment.delete_comment(comment_id)
+
+@pytest.fixture
+def generate_random_sentence():
+    return fake.sentence()
