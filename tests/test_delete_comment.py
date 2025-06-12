@@ -10,4 +10,4 @@ def test_delete_comment_fails_without_auth(new_list_comment, unauthorized_sender
     comment, payload, comment_id = new_list_comment
     response = Comment(unauthorized_sender).delete_comment(comment_id)
     assert response.status_code == 400, \
-        f"Expected 200, got {response.status_code}: {response.text}"
+        f"Expected 400, got {response.status_code}: {response.text}"
